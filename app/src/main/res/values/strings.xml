@@ -12,4 +12,6 @@
     <string name="enter_surname">Enter surname</string>
     <string name="enter_telephone">Enter number</string>
     <string name="add_user">Add user</string>
+    <string name="add_check">Add check</string>
+    <string name="delete">Delete</string>
 </resources>

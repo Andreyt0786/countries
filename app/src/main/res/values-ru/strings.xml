@@ -13,4 +13,6 @@
     <string name="enter_surname">Введите фамилию</string>
     <string name="enter_telephone">Введите номер</string>
     <string name="add_user">Добавить пользователя</string>
+    <string name="add_check">Добавить выбор</string>
+    <string name="delete">Delete</string>
 </resources>

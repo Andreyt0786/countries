@@ -5,4 +5,7 @@ data class TelePhoneBook(
     val name:String,
     val surName:String,
     val number:String,
+    var isSelected:Boolean = false
 )
+
+

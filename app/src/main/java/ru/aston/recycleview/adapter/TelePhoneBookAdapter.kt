@@ -1,8 +1,10 @@
 package ru.aston.recycleview.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import androidx.paging.ItemKeyedDataSource
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +16,8 @@ import ru.aston.recycleview.dto.TelePhoneBook
 interface OnInteractionListener {
     fun onEdit(telePhoneBook: TelePhoneBook) {}
     fun onRemove(telePhoneBook: TelePhoneBook) {}
+
+    fun onCheck(telePhoneBook: TelePhoneBook) {}
 }
 
 class TelePhoneBookDiffCallback : DiffUtil.ItemCallback<TelePhoneBook>() {
@@ -29,6 +33,8 @@ class TelePhoneBookDiffCallback : DiffUtil.ItemCallback<TelePhoneBook>() {
 class TelePhoneBookAdapter(
     private val onInteractionListener: OnInteractionListener,
 ) : ListAdapter<TelePhoneBook, TelePhoneBookViewHolder>(TelePhoneBookDiffCallback()) {
+
+    private var list: MutableList<TelePhoneBook> = mutableListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TelePhoneBookViewHolder {
@@ -48,11 +54,27 @@ class TelePhoneBookViewHolder(
     private val onInteractionListener: OnInteractionListener,
 ) : RecyclerView.ViewHolder(binding.root) {
 
+
+
     fun bind(telePhoneBook: TelePhoneBook) {
+
         binding.apply {
             contactName.text = telePhoneBook.name
             contactSurname.text = telePhoneBook.surName
             telephoneUser.text = telePhoneBook.number
+
+            check.setOnClickListener {
+               if(telePhoneBook.isSelected == false) {
+                   telePhoneBook.isSelected = true
+               }
+                else {telePhoneBook.isSelected = false}
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    binding.check.setButtonIconDrawableResource(
+                        if (telePhoneBook.isSelected) R.drawable.baseline_add_circle_24 else R.drawable.baseline_add_circle_outline_24
+                    )
+                }
+            }
 
             menu.setOnClickListener {
                 PopupMenu(it.context, it).apply {
@@ -75,6 +97,9 @@ class TelePhoneBookViewHolder(
                 }.show()
             }
 
+            check.setOnClickListener{
+                onInteractionListener.onCheck(telePhoneBook)
+            }
 
         }
     }

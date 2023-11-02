@@ -43,6 +43,8 @@ class TelePhoneRepositoryImpl() : TelePhoneBookRepository {
 
         )
     private val data = MutableLiveData(telePhoneBooks)
+
+    private val dataIsCheck = MutableLiveData(telePhoneBooks)
     override fun getAll(): LiveData<List<TelePhoneBook>> = data
 
     override fun save(telePhoneBook: TelePhoneBook) {
@@ -63,7 +65,8 @@ class TelePhoneRepositoryImpl() : TelePhoneBookRepository {
             if (it.id != telePhoneBook.id) it else it.copy(
                 name = telePhoneBook.name,
                 surName = telePhoneBook.surName,
-                number = telePhoneBook.number,)
+                number = telePhoneBook.number,
+                isSelected = telePhoneBook.isSelected,)
         }
         data.value = telePhoneBooks
 
